@@ -1,35 +1,13 @@
 import { View, Text, ImageBackground, StyleSheet, Image, Dimensions, Pressable, Animated } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
+import Header from './Header';
 
 const { width, height } = Dimensions.get('window');
 
 const AdminPortal = ({ navigation }) => {
-  const [menu, setMenu] = useState(false);
-  const slideAnim = useRef(new Animated.Value(-width * 0.7)).current; // Initial value for the menu position
-
-  const toggleMenu = () => {
-    setMenu(!menu);
-  };
-
-  useEffect(() => {
-    Animated.timing(slideAnim, {
-      toValue: menu ? 0 : -width * 0.7,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  }, [menu]);
-
-  return (
+ return (
     <ImageBackground source={require('../../assets/CloudsBackground.png')} style={styles.main}>
-      <View style={styles.header}>
-        <View style={styles.headerContainer}>
-          <Image source={require('../../assets/logo.jpeg')} style={styles.logo} />
-          <Text style={styles.headerText}>Admin Portal</Text>
-        </View>
-        <Pressable onPress={toggleMenu}>
-          <Image source={require('../../assets/menu.png')} style={styles.menuIcon} />
-        </Pressable>
-      </View>
+      <Header navigation={navigation}/>
       <View style={styles.v1}>
         <Text style={styles.infoText}>Total Students</Text>
         <Text style={styles.infoNumber}>1100</Text>
@@ -38,30 +16,7 @@ const AdminPortal = ({ navigation }) => {
         <Text style={styles.infoText}>Total Teachers</Text>
         <Text style={styles.infoNumber}>32</Text>
       </View>
-      {/* Menu Bar */}
-      <Animated.View style={[styles.menuView, { transform: [{ translateX: slideAnim }] }]}>
-        <Pressable onPress={()=>[toggleMenu,navigation.navigate('Add Student')]}>
-          <Text style={styles.menuText}>Add Student</Text>
-        </Pressable>
-        <Pressable onPress={toggleMenu}>
-          <Text style={styles.menuText}>Add Professor</Text>
-        </Pressable>
-        <Pressable onPress={toggleMenu}>
-          <Text style={styles.menuText}>Departments</Text>
-        </Pressable>
-        <Pressable onPress={toggleMenu}>
-          <Text style={styles.menuText}>Courses</Text>
-        </Pressable>
-        <Pressable onPress={toggleMenu}>
-          <Text style={styles.menuText}>Students</Text>
-        </Pressable>
-        <Pressable onPress={toggleMenu}>
-          <Text style={styles.menuText}>Faculty</Text>
-        </Pressable>
-        <Pressable onPress={toggleMenu}>
-          <Text style={styles.menuText}>Logout</Text>
-        </Pressable>
-      </Animated.View>
+      
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>Back</Text>
       </Pressable>
@@ -152,7 +107,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     marginVertical: height * 0.07,
-    padding: width * 0.1,
+    padding: width * 0.07,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,

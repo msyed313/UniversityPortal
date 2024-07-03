@@ -5,16 +5,17 @@ const Splash = ({navigation}) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.navigate('main');
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer); // Cleanup timer if component unmounts
   }, [navigation]);
  
   return (
-    <ImageBackground source={require('../assets/CloudsBackground.png')} style={style.main}>
+    <View style={style.main}>
         <StatusBar backgroundColor="skyblue" barStyle="light-content" />
-        <Text>Welcome to University Portal</Text>
-     </ImageBackground>
+        <Image source={require('../assets/logo.jpeg')} style={style.logo}/>
+        <Text style={style.text}>BIIT Portal</Text>
+     </View>
   )
 }
 
@@ -24,6 +25,19 @@ const style=StyleSheet.create({
       flex:1,
       justifyContent:'center',
       alignItems:'center',
+      backgroundColor:'white',
+      width:'100%',
+      height:'100%',
+      //backgroundColor:'skyblue'
   },
-  
+  logo:{
+    resizeMode:'center',
+    //backgroundColor:'red',
+    height:'30%'
+  },
+  text:{
+    fontSize:30,
+    color:'black',
+    fontWeight:'bold'
+  }
 })
