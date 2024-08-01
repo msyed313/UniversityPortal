@@ -1,5 +1,5 @@
-import { View, Text, ImageBackground, StyleSheet, Image, Dimensions, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, ImageBackground, StyleSheet, Image, Dimensions, Pressable,Animated } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,11 +19,29 @@ const Main = ({navigation}) => {
             "image": require('../assets/student.jpeg')
         }
     ];
-
+    const [menu, setMenu] = useState(false);
+    const slideAnim = useRef(new Animated.Value(-width * 0.7)).current;
+  
+    const toggleMenu = (item) => {
+      setMenu(!menu);
+      if (item) {
+        navigation.navigate(item);
+      }
+    };
+  
+    useEffect(() => {
+      Animated.timing(slideAnim, {
+        toValue: menu ? 0 : -width * 0.7,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }, [menu]);
     return (
         <ImageBackground source={require('../assets/CloudsBackground.png')} style={styles.main}>
             <View style={styles.header}>
-                <Image source={require('../assets/logo.jpeg')} style={styles.logo} />
+                <Pressable onPress={() => toggleMenu()}>
+                    <Image source={require('../assets/logo.jpeg')} style={styles.logo} />
+                </Pressable>
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerText}>Barani Institute of Information and Technology</Text>
                     <Text style={styles.headerSubText}>6 Road Satellite Town, Rawalpindi</Text>
@@ -35,6 +53,17 @@ const Main = ({navigation}) => {
                     <Image source={item.image} style={styles.img} />
                 </Pressable>
             ))}
+             <Animated.View style={[styles.menuView, { transform: [{ translateX: slideAnim }] }]}>
+      <Pressable onPress={() => toggleMenu('contact')}>
+          <Text style={styles.menuText}>Contact</Text>
+        </Pressable>
+        <Pressable onPress={() => toggleMenu('about')}>
+          <Text style={styles.menuText}>About</Text>
+        </Pressable>
+        <Pressable onPress={() => toggleMenu('Add Faculty')}>
+          <Text style={styles.menuText}>Exit</Text>
+        </Pressable>
+      </Animated.View>
         </ImageBackground>
     );
 };
@@ -97,4 +126,25 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         //resizeMode: 'contain'
     },
+    menuView: {
+        backgroundColor: 'skyblue',
+        height: height * 0.8,
+        width: width * 0.7,
+        position: 'absolute',
+        left: 0,
+        marginVertical: height * 0.07,
+        padding: width * 0.07,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5,
+        //zIndex: 1000,
+      },
+      menuText: {
+        fontSize: 20,
+        color: 'white',
+        fontWeight: '600',
+        marginVertical: height * 0.01,
+      },
 });

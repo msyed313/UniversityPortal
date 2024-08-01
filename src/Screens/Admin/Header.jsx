@@ -4,62 +4,13 @@ import React, { useState, useRef, useEffect } from 'react';
 const { width, height } = Dimensions.get('window');
 
 const Header = ({ navigation }) => {
-  const [menu, setMenu] = useState(false);
-  const slideAnim = useRef(new Animated.Value(-width * 0.7)).current;
-
-  const toggleMenu = (item) => {
-    setMenu(!menu);
-    if (item) {
-      navigation.navigate(item);
-    }
-  };
-
-  useEffect(() => {
-    Animated.timing(slideAnim, {
-      toValue: menu ? 0 : -width * 0.7,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  }, [menu]);
-
   return (
-    <>
       <View style={styles.header}>
         <View style={styles.headerContainer}>
           <Image source={require('../../assets/logo.jpeg')} style={styles.logo} />
-          <Text style={styles.headerText}>Admin Portal</Text>
+          <Text style={styles.headerText}>Admin Panel</Text>
         </View>
-        <Pressable onPress={() => toggleMenu()}>
-          <Image source={require('../../assets/menu.png')} style={styles.menuIcon} />
-        </Pressable>
-      </View>
-      <Animated.View style={[styles.menuView, { transform: [{ translateX: slideAnim }] }]}>
-      <Pressable onPress={() => toggleMenu('Admin Portal')}>
-          <Text style={styles.menuText}>Home</Text>
-        </Pressable>
-        <Pressable onPress={() => toggleMenu('Add Student')}>
-          <Text style={styles.menuText}>Add Student</Text>
-        </Pressable>
-        <Pressable onPress={() => toggleMenu('Add Faculty')}>
-          <Text style={styles.menuText}>Hire Professor</Text>
-        </Pressable>
-        <Pressable onPress={() => toggleMenu('departments')}>
-          <Text style={styles.menuText}>Departments</Text>
-        </Pressable>
-        <Pressable onPress={() => toggleMenu('courses')}>
-          <Text style={styles.menuText}>Courses</Text>
-        </Pressable>
-        <Pressable onPress={() => toggleMenu('students')}>
-          <Text style={styles.menuText}>Students</Text>
-        </Pressable>
-        <Pressable onPress={() => toggleMenu('faculty')}>
-          <Text style={styles.menuText}>Faculty</Text>
-        </Pressable>
-        <Pressable>
-          <Text style={styles.menuText}>Logout</Text>
-        </Pressable>
-      </Animated.View>
-    </>
+        </View>
   );
 }
 
@@ -68,7 +19,6 @@ export default Header;
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    alignItems: 'center',
   },
   header: {
     width: '100%',
@@ -76,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    marginBottom: height * 0.07,
+    marginBottom: height * 0.02,
   },
   headerContainer: {
     flexDirection: 'row',

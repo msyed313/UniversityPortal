@@ -36,11 +36,7 @@ const AddStudents = ({ navigation }) => {
         <TextInput style={styles.input} />
       </View>
       <View style={styles.view}>
-        <Text style={styles.text}>Email</Text>
-        <TextInput style={styles.input} />
-      </View>
-      <View style={styles.view}>
-        <Text style={styles.text}>Ph No</Text>
+        <Text style={styles.text}>Paswrd</Text>
         <TextInput style={styles.input} />
       </View>
       <View style={styles.view}>
